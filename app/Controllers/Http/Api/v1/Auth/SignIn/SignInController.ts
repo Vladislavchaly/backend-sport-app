@@ -1,8 +1,8 @@
 'use strict'
 import {HttpContextContract} from '@ioc:Adonis/Core/HttpContext'
-import SignInvalidator from "App/Validators/Api/v1/Auth/SignInValidator";
-import User from "App/Models/User";
-import {OpaqueTokenContract} from "@ioc:Adonis/Addons/Auth";
+import SignInvalidator from 'App/Validators/Api/v1/Auth/SignInValidator';
+import User from 'App/Models/User';
+import {OpaqueTokenContract} from '@ioc:Adonis/Addons/Auth';
 
 export default class SignInController {
 
