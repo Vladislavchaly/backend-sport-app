@@ -1,6 +1,6 @@
 'use strict'
-import User from "App/Models/User";
-import IUser from "App/Interfaces/User/IUser";
+import User from 'App/Models/User';
+import IUser from 'App/Interfaces/User/IUser';
 
 
 export default class UsersRepositories {
@@ -17,8 +17,8 @@ export default class UsersRepositories {
    * @param id
    */
   static async deleteUser(id: number): Promise<void> {
-    const user: User = await User.query().where('id', id).firstOrFail()
-    return user.delete()
+    const user: User = await User.query().where('id', id).firstOrFail();
+    return user.delete();
   }
 
   /**
