@@ -20,6 +20,23 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+const apiGroup = (version, prefix, group) => {
+  group.prefix('api/' + version + '/' + prefix)
+  group.namespace('App/Controllers/Http/Api/' + version + '/')
+  return group
+}
+
+
+apiGroup('v1', 'auth', Route.group(async () => {
+  Route.post('sign-in', 'Auth/SignIn/SignInController.index')
+  Route.post('sign-up', 'Auth/SignUp/SignUpController.index')
+}))
+
+apiGroup('v1', 'user', Route.group(async () => {
+  Route.get('me', 'Users/GetMeController.index')
+}))
+
 Route.get('/', async () => {
-  return { hello: 'world' }
+  return {hello: 'world'}
 })
+
