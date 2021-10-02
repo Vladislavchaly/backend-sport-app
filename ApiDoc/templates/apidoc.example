@@ -1,0 +1,12 @@
+{
+  "name": "sport-app Server (Api)",
+  "version": "1.0.0",
+  "description": "sport-app Server Api Documentation",
+  "title": "sport-app Server Api Documentation",
+  "url": "#youPath#/api/",
+  "sampleUrl": "#youPath#/api/",
+  "order": [
+     "Search",
+     "Socket"
+  ]
+}
