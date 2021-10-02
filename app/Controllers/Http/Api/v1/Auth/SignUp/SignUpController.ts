@@ -9,18 +9,19 @@ import IUser from "App/Interfaces/User/IUser";
 export default class SignUpController {
 
   public async index({auth, request}: HttpContextContract): Promise<ReturnType<OpaqueTokenContract<User>['toJSON']>> {
-    await request.validate(SignUpValidator)
+
+    await request.validate(SignUpValidator);
 
     const data: IUser = request.only([
       'name',
       'email',
       'password'
-    ])
+    ]);
 
-    const user: User = await UsersRepositories.createUser(data)
+    const user: User = await UsersRepositories.createUser(data);
 
     return await auth.use('api').login(user, {
       name: request.header('user-agent')
-    })
+    });
   }
 }

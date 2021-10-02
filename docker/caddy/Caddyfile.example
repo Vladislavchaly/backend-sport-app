@@ -14,7 +14,7 @@ https://apidoc.chaly.xyz {
 
 https://aws.chaly.xyz {
 
-    proxy / XXX_node:1780 {
+    proxy / sport_app_node:1780 {
       websocket
     	transparent
     }
