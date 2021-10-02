@@ -8,7 +8,7 @@ export default class SignInController {
 
   public async index({auth, request}: HttpContextContract): Promise<ReturnType<OpaqueTokenContract<User>['toJSON']>> {
 
-    await request.validate(SignInvalidator)
+    await request.validate(SignInvalidator);
 
     const email: string = request.input('email');
     const password: string = request.input('password');
