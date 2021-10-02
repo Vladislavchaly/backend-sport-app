@@ -28,12 +28,13 @@ const apiGroup = (version, prefix, group) => {
 
 
 apiGroup('v1', 'auth', Route.group(async () => {
-  Route.post('sign-in', 'Auth/SignIn/SignInController.index')
-  Route.post('sign-up', 'Auth/SignUp/SignUpController.index')
+  Route.post('sign-in', 'Auth/SignIn/SignInController.index');
+  Route.post('sign-up', 'Auth/SignUp/SignUpController.index');
 }))
 
 apiGroup('v1', 'user', Route.group(async () => {
-  Route.get('me', 'Users/GetMeController.index')
+  Route.get('me', 'Users/GetMeController.index');
+  Route.delete('delete', 'Users/DeleteController.index');
 }))
 
 Route.get('/', async () => {
