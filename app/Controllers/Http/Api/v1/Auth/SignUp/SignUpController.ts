@@ -1,22 +1,16 @@
 'use strict'
 import {HttpContextContract} from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User';
 import {OpaqueTokenContract} from '@ioc:Adonis/Addons/Auth';
 import SignUpValidator from 'App/Validators/Api/v1/Auth/SignUpValidator';
 import UsersRepositories from 'App/Repositories/UsersRepositories';
-import IUser from 'App/Interfaces/User/IUser';
+import User from 'App/Models/User';
+import ISignUp from "App/Interfaces/Auth/ISignUp";
 
 export default class SignUpController {
 
   public async index({auth, request}: HttpContextContract): Promise<ReturnType<OpaqueTokenContract<User>['toJSON']>> {
 
-    await request.validate(SignUpValidator);
-
-    const data: IUser = request.only([
-      'name',
-      'email',
-      'password'
-    ]);
+    const data: ISignUp = await request.validate(SignUpValidator);
 
     const user: User = await UsersRepositories.createUser(data);
 
