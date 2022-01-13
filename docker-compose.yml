@@ -1,0 +1,85 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: "sport_app_postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${PG_DB_USERNAME}
+      - POSTGRES_PASSWORD=${PG_DB_PASSWORD}
+      - POSTGRES_DB=${PG_DB_DATABASE}
+    volumes:
+      - sport_app_postgres_data:/var/lib/postgresql/data
+
+#  nginx:
+#    image: nginx:latest
+#    container_name: "sport_app_nginx"
+#    ports:
+#      - 80:80
+#      - 443:443
+#    volumes:
+#      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+#      - ./:/app
+#    links:
+#      - node
+
+  webserver:
+    image: abiosoft/caddy
+    container_name: "sport_app_webserver"
+    environment:
+      - ACME_AGREE=true
+      - CADDYPATH=/etc/caddycerts
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/Caddyfile
+      - ./docker/caddy/caddyssl:/etc/caddycerts
+      - ./:/app
+    depends_on:
+      - node
+
+#  socket_node:
+#    build: ./Socket/docker/node
+#    container_name: "sport_app_socket_node"
+#    restart: always
+#    tty: true
+#    ports:
+#      - "9999:9999"
+#    volumes:
+#      - ./Socket:/app
+#    depends_on:
+#      - socket_redis
+
+  node:
+    build: ./docker/node
+    container_name: "sport_app_node"
+    tty: true
+    ports:
+      - 1780:1780
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres
+
+
+  #Socket
+  socket_redis:
+    image: redis
+    container_name: "sport_app_socket_redis"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  sport_app_postgres_data:
+  redis_data:
+
+
+networks:
+  default:
+    external:
+      name: sport-app-proxy

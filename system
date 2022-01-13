@@ -1,0 +1,80 @@
+#!/bin/bash
+
+if ! [ -x "$(command -v realpath)" ]; then
+	echo "realpath is missing, please install it."
+	exit 1
+fi
+
+# Set up basic variables
+SCRIPTSDIR="$PWD/system_scripts"
+
+. $SCRIPTSDIR/config.sh
+
+QUIT=0
+MESSAGE=""
+
+# Main app - give the user a list of choices
+function main () {
+	echo $MESSAGE
+	echo "=============== $SITENAME ==============="
+	echo ""
+	MESSAGE=""
+	PS3="Choose an option: "
+	OPTIONS=("Run Install" "Run Workspace" "Build" "Docker Up" "Docker Down" "Quit")
+	select OPTION in "${OPTIONS[@]}"; do
+		case "$OPTION" in
+			"Run Install")
+					echo "[-] This run install system"
+					read -p "Continue (y/n)?" choice
+					case "$choice" in
+					  y|Y )
+							source $SCRIPTSDIR/run-install.sh
+							echo "[-] Install has been compleated"
+							;;
+						*) echo "[-] Run install canceled"
+					esac
+					break
+					;;
+            "Run Workspace")
+                    source $SCRIPTSDIR/docker/console.sh
+                    break
+                    ;;
+            "Build")
+					echo "[-] This build in environment"
+					read -p "Continue (api/backend)?" choice
+					case "$choice" in
+					  api|backend )
+							source $SCRIPTSDIR/build/apidoc.sh
+							;;
+						*) source $SCRIPTSDIR/build/backend.sh
+					esac
+					break
+					;;
+            "Docker Up")
+					echo "[-] This run in environment"
+					read -p "Continue (dev/prod)?" choice
+					case "$choice" in
+					  prod|Prod )
+							source $SCRIPTSDIR/docker/up_prod.sh
+							;;
+						*) source $SCRIPTSDIR/docker/up_dev.sh
+					esac
+					break
+					;;
+            "Docker Down")
+                    source $SCRIPTSDIR/docker/down.sh
+                    echo "[-] Done"
+                    break
+                    ;;
+			"Quit")
+					QUIT=1
+					break
+					;;
+			*) echo "[-] Bad choice .. try again";;
+		esac
+	done
+}
+
+while [ "$QUIT" -eq "0" ]; do
+	main
+done
