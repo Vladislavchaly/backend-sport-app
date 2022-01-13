@@ -1,6 +1,6 @@
 'use strict'
 import User from 'App/Models/User';
-import IUser from 'App/Interfaces/User/IUser';
+import ISignUp from "App/Interfaces/Auth/ISignUp";
 
 
 export default class UsersRepositories {
@@ -9,7 +9,7 @@ export default class UsersRepositories {
    * @constructor
    * @param data
    */
-  static async createUser(data: IUser): Promise<User> {
+  static async createUser(data: ISignUp): Promise<User> {
     return await User.create(data);
   }
 
