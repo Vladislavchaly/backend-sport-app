@@ -1,6 +1,6 @@
 'use strict'
 import User from 'App/Models/User';
-import ISignUp from "App/Interfaces/Auth/ISignUp";
+import ISignUp from 'App/Interfaces/Auth/ISignUp';
 
 
 export default class UsersRepositories {
@@ -14,11 +14,10 @@ export default class UsersRepositories {
   }
 
   /**
-   * @param id
+   * @param user
    */
-  static async deleteUser(id: number): Promise<void> {
-    const user: User = await User.query().where('id', id).firstOrFail();
-    return user.delete();
+  static async deleteUser(user: User): Promise<void> {
+    return await user.delete();
   }
 
   /**

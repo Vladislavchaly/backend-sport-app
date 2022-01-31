@@ -7,7 +7,7 @@ export default class DeleteController {
 
   public async index({auth, response}: HttpContextContract): Promise<void> {
     const user: User = await auth.use('api').authenticate();
-    await UsersRepositories.deleteUser(user.id);
+    await UsersRepositories.deleteUser(user);
     return response.send({}, true);
   }
 
