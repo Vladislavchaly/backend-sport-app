@@ -33,6 +33,7 @@ apiGroup('v1', 'auth', Route.group(async () => {
 }))
 
 apiGroup('v1', 'user', Route.group(async () => {
+  Route.post('update', 'Users/UpdateController.index');
   Route.get('me', 'Users/GetMeController.index');
   Route.delete('delete', 'Users/DeleteController.index');
 }))

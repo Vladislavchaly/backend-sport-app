@@ -1,6 +1,7 @@
 'use strict'
 import User from 'App/Models/User';
 import ISignUp from 'App/Interfaces/Auth/ISignUp';
+import IUpdate from "App/Interfaces/User/IUpdate";
 
 
 export default class UsersRepositories {
@@ -22,12 +23,10 @@ export default class UsersRepositories {
 
   /**
    * @constructor
+   * @param user
    * @param data
-   * @param id
    */
-  static async updateUser(data: User, id: number): Promise<User> {
-
-      return await User.query().where('id', id).update(data).firstOrFail();
-
+  static async updateUser(user: User, data: IUpdate): Promise<User> {
+    return await user.merge(data).save()
   }
 }
